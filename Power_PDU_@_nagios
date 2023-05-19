@@ -1,0 +1,70 @@
+#!/bin/sh
+#################################################################
+# Script zum auslesen der Leistunges-Werte aller PDUs in KM     #
+#                                                               #
+# date: 2022-10-13                                              #
+# autor: EG6                                                    ä
+#################################################################
+# Variablen deklarieren:
+C1R1=8
+C1R2=9
+C1R3=10
+C1R4=11
+C1R5=12
+C2R1=58
+C2R2=59
+C2R3=60
+C2R4=61
+C2R5=62
+now=$(date +"%Y-%m-%d_%H-%M")
+path=/tmp/results_power_$now.txt
+pathcsv=/opt/PDU-Power/results_power_$now.csv
+USER=<USERNAME>
+PASS=<PASSWORD>
+
+#echo $C1R1
+echo "C1R1-Werte werden ausgelesen..."
+echo "Werte Container 1 Rack 1" >> $path
+sshpass -p $PASS ssh $USER@172.21.199.$C1R1 'for i in {1..2}; do for j in {1..3}; do CommandLine --cmd readvalues --pdu $i --phase $j | grep "  Active Power"; done; done; exit' >> $path
+
+echo "C1R2-Werte werden ausgelesen..."
+echo "Werte Container 1 Rack 2" >> $path
+sshpass -p $PASS ssh $USER@172.21.199.$C1R2 'for i in {1..2}; do for j in {1..3}; do CommandLine --cmd readvalues --pdu $i --phase $j | grep "  Active Power"; done; done; exit' >> $path
+
+echo "C1R3-Werte werden ausgelesen..."
+echo "Werte Container 1 Rack 3" >> $path
+sshpass -p $PASS ssh $USER@172.21.199.$C1R3 'for i in {1..2}; do for j in {1..3}; do CommandLine --cmd readvalues --pdu $i --phase $j | grep "  Active Power"; done; done; exit' >> $path
+
+echo "C1R4-Werte werden ausgelesen..."
+echo "Werte Container 1 Rack 4" >> $path
+sshpass -p $PASS ssh $USER@172.21.199.$C1R4 'for i in {1..2}; do for j in {1..3}; do CommandLine --cmd readvalues --pdu $i --phase $j | grep "  Active Power"; done; done; exit' >> $path
+
+echo "C1R5-Werte werden ausgelesen..."
+echo "Werte Container 1 Rack 5" >> $path
+sshpass -p $PASS ssh $USER@172.21.199.$C1R5 'for i in {1..2}; do for j in {1..3}; do CommandLine --cmd readvalues --pdu $i --phase $j | grep "  Active Power"; done; done; exit' >> $path
+
+echo "C2R1-Werte werden ausgelesen..."
+echo "Werte Container 2 Rack 1" >> $path
+sshpass -p $PASS ssh $USER@172.21.199.$C2R1 'for i in {1..2}; do for j in {1..3}; do CommandLine --cmd readvalues --pdu $i --phase $j | grep "  Active Power"; done; done; exit' >> $path
+
+echo "C2R2-Werte werden ausgelesen..."
+echo "Werte Container 2 Rack 2" >> $path
+sshpass -p $PASS ssh $USER@172.21.199.$C2R2 'for i in {1..2}; do for j in {1..3}; do CommandLine --cmd readvalues --pdu $i --phase $j | grep "  Active Power"; done; done; exit' >> $path
+
+echo "C2R3-Werte werden ausgelesen..."
+echo "Werte Container 2 Rack 3" >> $path
+sshpass -p $PASS ssh $USER@172.21.199.$C2R3 'for i in {1..2}; do for j in {1..3}; do CommandLine --cmd readvalues --pdu $i --phase $j | grep "  Active Power"; done; done; exit' >> $path
+
+echo "C2R4-Werte werden ausgelesen..."
+echo "Werte Container 2 Rack 4" >> $path
+sshpass -p $PASS ssh $USER@172.21.199.$C2R4 'for i in {1..2}; do for j in {1..3}; do CommandLine --cmd readvalues --pdu $i --phase $j | grep "  Active Power"; done; done; exit' >> $path
+
+echo "C2R5-Werte werden ausgelesen..."
+echo "Werte Container 2 Rack 5" >> $path
+sshpass -p $PASS ssh $USER@172.21.199.$C2R5 'for i in {1..2}; do for j in {1..3}; do CommandLine --cmd readvalues --pdu $i --phase $j | grep "  Active Power"; done; done; exit' >> $path
+
+# Datei als csv bauen
+cut -d " " -f 1-30 $path --output-delimiter=';' >> $pathcsv
+rm $path
+
+exit
