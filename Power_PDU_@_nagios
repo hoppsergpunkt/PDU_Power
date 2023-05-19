@@ -1,6 +1,6 @@
 #!/bin/sh
 #################################################################
-# Script zum auslesen der Leistunges-Werte aller PDUs in KM     #
+# Script zum auslesen der Leistunges-Werte aller PDUs.          #
 #                                                               #
 # date: 2022-10-13                                              #
 # autor: EG6                                                    ä
